@@ -2,15 +2,9 @@
 // =================================================
 
 if (document.addEventListener) {
-    window.addEventListener('load', function () {
+    document.addEventListener('DOMContentLoaded', function () {
+        console.log('1a');
         videoElementSrcset.init();
     }, false);
-} else if (window.attachEvent) {
-    window.attachEvent("onload", function () {
-        videoElementSrcset.init();
-    });
-} else {
-    window.onload = function () {
-        videoElementSrcset.init();
-    };
-};
+}
+console.log('1');
