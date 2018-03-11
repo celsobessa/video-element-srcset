@@ -23,6 +23,11 @@ Suggested Roadmap:
 	- module support
 	- loadJS
 
+## [0.2.0] - WIP
+
+### Changed
+- uses device-based breakpoint names based on CSS pseudoelements to manage breakpoints instead of match.media() (see https://gomakethings.com/the-easy-way-to-manage-css-breakpoints-in-javascript/ )
+
 ## [0.1.0] - 2018-03-09
 
 ### Added
