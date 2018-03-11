@@ -10,10 +10,10 @@ This project adheres to [Semantic Versioning](http://semver.org/)
 
 Suggested Roadmap:
 
-- enforce complex media rules (e.g. (min-width: 480px) and (max-width: 760px))
-- make sure it supports multiple instances of video tags
 - move srcset to video element
+- make sure it supports multiple instances of video tags
 - allow video without <source> elements
+- Improve documentation
 - improve performance: avoid unnecessary file downloads (maybe conditionally avoid video.load() method )
 - improve performance: service worker and cache API
 - enforce security
@@ -23,10 +23,14 @@ Suggested Roadmap:
 	- module support
 	- loadJS
 
-## [0.2.0] - WIP
+## [0.2.0] - 2018-03-10
 
 ### Changed
 - uses device-based breakpoint names based on CSS pseudoelements to manage breakpoints instead of match.media() (see https://gomakethings.com/the-easy-way-to-manage-css-breakpoints-in-javascript/ )
+- Improved README.md
+
+### Added
+- requestAnimationFrame polyfill
 
 ## [0.1.0] - 2018-03-09
 
