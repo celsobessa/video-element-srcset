@@ -23,10 +23,21 @@ Suggested Roadmap:
 	- module support
 	- loadJS
 
+## [0.3.0] - 2018-03-10
+
+### Added
+- Allow the use of standard and complex media queries
+- default settings and user options
+- standard media queries sample stylesheet
+
+### Changed
+- Improved README.md
+- added an `itshuuuge-trustme-iknowhuge` breakpoint for huge screens
+
 ## [0.2.0] - 2018-03-10
 
 ### Changed
-- uses device-based breakpoint names based on CSS pseudoelements to manage breakpoints instead of match.media() (see https://gomakethings.com/the-easy-way-to-manage-css-breakpoints-in-javascript/ )
+- uses device-based breakpoint names based on CSS pseudo-elements to manage breakpoints instead of match.media() (see https://gomakethings.com/the-easy-way-to-manage-css-breakpoints-in-javascript/ )
 - Improved README.md
 
 ### Added

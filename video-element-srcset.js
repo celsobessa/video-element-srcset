@@ -94,10 +94,11 @@ var extend = function () {
  * @return {void}
  */
 
- var videoElementSrcset = function (videoElement, videoSources) {
+ var videoElementSrcset = function () {
+    // TODO allow custom videoElement, videoSources through function parameters
 
     // declare our variables
-    var breakpoint, previousBreakpoint, activeVideoBreakpoint, autoplay, timeout, videoSourceElement, activeSource, videoSrcSet = '';
+    var breakpoint, previousBreakpoint, activeVideoBreakpoint, breakpointWeights, autoplay, timeout, videoSourceElement, activeSource, videoSrcSet = '';
 
     // if videoElement is not provided, get the first video element in the document
     var videoElement = videoElement || document.getElementsByTagName('video')[0];
@@ -113,17 +114,15 @@ var extend = function () {
 
     var defaults = {
         serviceWorker: true,
-        autoplay: false
+        autoplay: false,
+        breakpointWeights: {
+            '"xsmall"': 1,
+            '"small"': 2,
+            '"medium"': 3,
+            '"large"': 4,
+            '"xlarge"': 5
+        }
     };
-
-    // breakpoint weights, used to avoid unnecessaries video loading
-    var breakpointWeight = {
-        '"xsmall"': 1,
-        '"small"':  2,
-        '"medium"': 3,
-        '"large"':  4,
-        '"xlarge"': 5
-    }
 
     // install Service Worker to better cache management
     var installWorker = function () {
@@ -178,19 +177,20 @@ var extend = function () {
         // loops the through our sources
         for (i = 0; i < videoSrcSet.length; ++i) {
 
-            var components = videoSrcSet[i].split(' ');
+            var components = videoSrcSet[i].split(', ');
             videoSources['"' + components[0] + '"'] = [components[1], 'not-loaded'] ;
         }
     }
 
+
     // window.resize listener
     var breakpointListener = function () {
         breakpoint = getBreakpoint();
-        if ( breakpointWeight[breakpoint] ) {
+        if ( breakpointWeights[breakpoint] ) {
 
             // triggers only if breakpoint changed and if the new breakpoint is larger than the one
             // which loaded the active video
-            if ( breakpointWeight[breakpoint] !== breakpointWeight[previousBreakpoint] && breakpointWeight[breakpoint] > breakpointWeight[activeVideoBreakpoint] ) {
+            if ( breakpointWeights[breakpoint] !== breakpointWeights[previousBreakpoint] && breakpointWeights[breakpoint] > breakpointWeights[activeVideoBreakpoint] ) {
                 publicAPIs.manageSrc( breakpoint);
             }
         }
@@ -202,8 +202,6 @@ var extend = function () {
     // manager the source swap
     publicAPIs.manageSrc = function ( breakpoint ) {
 
-        console.log('publicAPIs.manageSrc init breakpoint =', breakpoint);
-        console.log('publicAPIs.manageSrc init videoSources =', videoSources);
         // what is the active src?
         activeSource = videoSourceElement.getAttribute('src');
 
@@ -249,6 +247,9 @@ var extend = function () {
 
         // Merge user options with the defaults
         settings = extend(defaults, options || {});
+
+        // breakpoint weights, used to avoid unnecessaries video loading
+        breakpointWeights = settings.breakpointWeights;
 
         // if the Service Worker is supported, install it to better cache management
         if ( settings.serviceWorker = true && true === defaults.serviceWorker && 'serviceWorker' in navigator) {
