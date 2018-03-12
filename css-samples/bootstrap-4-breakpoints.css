@@ -1,0 +1,38 @@
+/**
+ * @section Breakpoints
+ * These values will not show up in content, but can be queried by JavaScript to know which breakpoint is active. Add or remove as many breakpoints as you like.
+ * @author Mike Herchel, Chris Ferdinandi
+ *
+ * @link https://gomakethings.com/the-easy-way-to-manage-css-breakpoints-in-javascript/
+ * @link https://www.lullabot.com/articles/importing-css-breakpoints-into-javascript
+ */
+
+body:before {
+    content: "xsmall";
+    display: none;
+    visibility: hidden;
+}
+
+@media (min-width: 576px) {
+    body:before {
+        content: "small";
+    }
+}
+
+@media (min-width: 768px) {
+    body:before {
+        content: "medium";
+    }
+}
+
+@media (min-width: 992px) {
+    body:before {
+        content: "large";
+    }
+}
+
+@media (min-width: 1200px) {
+    body:before {
+        content: "xlarge";
+    }
+}

@@ -29,6 +29,51 @@
         };
 }());
 
+/*! extend.js | (c) 2017 Chris Ferdinandi | MIT License | http://github.com/cferdinandi/extend */
+/**
+ * Merge two or more objects together.
+ * @param {Boolean}  deep     If true, do a deep (or recursive) merge [optional]
+ * @param {Object}   objects  The objects to merge together
+ * @returns {Object}          Merged values of defaults and options
+ */
+var extend = function () {
+
+    // Variables
+    var extended = {};
+    var deep = false;
+    var i = 0;
+    var length = arguments.length;
+
+    // Check if a deep merge
+    if (Object.prototype.toString.call(arguments[0]) === '[object Boolean]') {
+        deep = arguments[0];
+        i++;
+    }
+
+    // Merge the object into the extended object
+    var merge = function (obj) {
+        for (var prop in obj) {
+            if (Object.prototype.hasOwnProperty.call(obj, prop)) {
+                // If deep merge and property is an object, merge properties
+                if (deep && Object.prototype.toString.call(obj[prop]) === '[object Object]') {
+                    extended[prop] = extend(true, extended[prop], obj[prop]);
+                } else {
+                    extended[prop] = obj[prop];
+                }
+            }
+        }
+    };
+
+    // Loop through each object and conduct a merge
+    for (; i < length; i++) {
+        var obj = arguments[i];
+        merge(obj);
+    }
+
+    return extended;
+
+};
+
 /**
  * Breakpoint based multiple videos sources for html5 videos
  *
@@ -52,16 +97,24 @@
  var videoElementSrcset = function (videoElement, videoSources) {
 
     // declare our variables
-    var breakpoint, previousBreakpoint, activeVideoBreakpoint, timeout, videoSourceElement, activeSource, videoSrcSet = '';
+    var breakpoint, previousBreakpoint, activeVideoBreakpoint, autoplay, timeout, videoSourceElement, activeSource, videoSrcSet = '';
 
     // if videoElement is not provided, get the first video element in the document
     var videoElement = videoElement || document.getElementsByTagName('video')[0];
 
     // if videoSources is not provided, create an empty object
-    var videoSources = videoSources || [];
+     var videoSources = videoSources || [];
 
     // Public APIs
     var publicAPIs = {};
+
+    // Settings
+    var settings;
+
+    var defaults = {
+        serviceWorker: true,
+        autoplay: false
+    };
 
     // breakpoint weights, used to avoid unnecessaries video loading
     var breakpointWeight = {
@@ -88,6 +141,10 @@
         return window.getComputedStyle(document.body, ':before').content;
     };
 
+    autoplay = videoElement.getAttribute('autoplay');
+    if ( autoplay && 'false' !== autoplay ){
+        settings.autoplay = true;
+    }
     // Calculate breakpoint on page load
     breakpoint = previousBreakpoint = activeVideoBreakpoint = getBreakpoint();
 
@@ -102,6 +159,7 @@
 
 
         videoSourceElement = document.querySelector('video source');
+        videoElement
         if (0 === videoSourceElement.length) {
             return;
         }
@@ -128,11 +186,13 @@
     // window.resize listener
     var breakpointListener = function () {
         breakpoint = getBreakpoint();
+        if ( breakpointWeight[breakpoint] ) {
 
-        // triggers only if breakpoint changed and if the new breakpoint is larger than the one
-        // which loaded the active video
-        if (breakpointWeight[breakpoint] !== breakpointWeight[previousBreakpoint] && breakpointWeight[breakpoint] > breakpointWeight[activeVideoBreakpoint]  ) {
-            publicAPIs.manageSrc( breakpoint);
+            // triggers only if breakpoint changed and if the new breakpoint is larger than the one
+            // which loaded the active video
+            if ( breakpointWeight[breakpoint] !== breakpointWeight[previousBreakpoint] && breakpointWeight[breakpoint] > breakpointWeight[activeVideoBreakpoint] ) {
+                publicAPIs.manageSrc( breakpoint);
+            }
         }
 
         previousBreakpoint = breakpoint;
@@ -142,6 +202,8 @@
     // manager the source swap
     publicAPIs.manageSrc = function ( breakpoint ) {
 
+        console.log('publicAPIs.manageSrc init breakpoint =', breakpoint);
+        console.log('publicAPIs.manageSrc init videoSources =', videoSources);
         // what is the active src?
         activeSource = videoSourceElement.getAttribute('src');
 
@@ -160,7 +222,9 @@
             videoSources[breakpoint][1] = 'loaded'
 
             // play it, monkey!
-            videoElement.play();
+            if ( settings.autoplay === true ){
+                videoElement.play();
+            }
 
             // update activeSource
             activeSource = videoSources[breakpoint][0];
@@ -175,21 +239,26 @@
     // init method
     publicAPIs.init = function (options) {
 
+        // Feature test
+        var supports = 'querySelector' in document && 'addEventListener' in window;
+        if (!supports) return;
+
+
         // defaults
-        // TODO merge user options
         // TODO allows overriding of breakpoint weights
-        var defaults = {
-            serviceWorker: true
-        };
+
+        // Merge user options with the defaults
+        settings = extend(defaults, options || {});
 
         // if the Service Worker is supported, install it to better cache management
-        if (true === defaults.serviceWorker && 'serviceWorker' in navigator) {
+        if ( settings.serviceWorker = true && true === defaults.serviceWorker && 'serviceWorker' in navigator) {
             //installWorker();
             //console.log('installWorker');
         }
-
-        // run the manageSrc once on load
-        publicAPIs.manageSrc(breakpoint);
+        if ( videoSources[breakpoint] ) {
+            // run the manageSrc once on load
+            publicAPIs.manageSrc(breakpoint);
+        }
 
         // Listen for resize events
         // see https://gomakethings.com/debouncing-events-with-requestanimationframe-for-better-performance/

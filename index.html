@@ -4,7 +4,24 @@
 	<meta name="viewport" content="width=device-width" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>Video Element SrcSet</title>
-	<style id="video-element-srcset">
+	<style>
+		body {
+			width: 100%;
+			margin: 0;
+			padding: 5%;
+			font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",
+			  Helvetica, sans-serif;
+
+		}
+		video {
+			max-width: 90%;
+			margin: 0 auto;
+		}
+		a {
+			text-decoration: none;
+		}
+	</style>
+	<style id="video-element-srcset-fixed">
 		/**
 		 * @section Breakpoints
 		 * These values will not show up in content, but can be queried by JavaScript to know which breakpoint is active. Add or remove as many breakpoints as you like.
@@ -46,10 +63,23 @@
 	</style>
 </head>
 <body>
-	<video autoplay loop poster="https://d1w0euf7v9rzov.cloudfront.net/wp-content/uploads/images/capa-video.jpg" id="header-video">
-		<source src="https://d1w0euf7v9rzov.cloudfront.net/wp-content/uploads/2018/03/party-girls_mobile-288.mp4" type="video/mp4"
-		 data-srcset="xsmall https://d1w0euf7v9rzov.cloudfront.net/wp-content/uploads/2018/03/party-girls_mobile-288.mp4; small https://d1w0euf7v9rzov.cloudfront.net/wp-content/uploads/2018/03/party-girls_mobile-otimizada.mp4; medium https://d1w0euf7v9rzov.cloudfront.net/wp-content/uploads/2018/03/party-girls_desktop-otimizado.mp4; large https://d1w0euf7v9rzov.cloudfront.net/wp-content/uploads/videos/party-girls_desktop.mp4; xlarge https://d1w0euf7v9rzov.cloudfront.net/wp-content/uploads/videos/party-girls_desktop.mp4">
+	<h1>Video Element SrcSet JS Demo</h1>
+	<h2>Device-based breakpoints videos sources for HTML5 videos</h2>
+	<p>This utility plugin allows the use of multiple videos sources for different breakpoints on HTML5 videos in a similar way to images srcset, using device-based breakpoint like the ones used by Bootstrap (xsmall, small, medium, large, xlarge).</p>
+
+	<video poster="/video-element-srcset/images/celso-bessa-fotos-de-bolso-panoramas-tiradentinos-20160303-a.jpg" id="header-video" controls autoplay>
+		<source src="/video-element-srcset/videos/serra-de-sao-jose-tiradentes-minas-gerais-brazil-xsmall.mp4" type="video/mp4"
+		 data-srcset="small /video-element-srcset/videos/serra-de-sao-jose-tiradentes-minas-gerais-brazil-xsmall.mp4; medium /video-element-srcset/videos/serra-de-sao-jose-tiradentes-minas-gerais-brazil-medium.mp4; large /video-element-srcset/videos/serra-de-sao-jose-tiradentes-minas-gerais-brazil-large.mp4; xlarge /video-element-srcset/videos/serra-de-sao-jose-tiradentes-minas-gerais-brazil.mp4">
 	</video>
+	<p>
+		<small>
+			Video: Serra de São José at <a href="https://www.japuapp.com.br/app/">Tiradentes</a>, Brazil.
+		</small>
+	</p>
+	<hr>
+	<p>Video Element SrcSet JS - Copyright 2018 <a href="https://www.celsobessa.com.br" target="_blank">Celso Bessa</a> and <a href="https://www.wowperations.com" target="_blank">WoWPerations</a>.</p>
+	<p>MIT Licensed. More information in <a href="https://github.com/2aces/video-element-srcset" target="_blank">Github repository</a></p>
+	<p><small>Poster image by Celso Bessa, licensed under a <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="nofollow" target="_blank">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International license</a></small></p>
 	<script src="./video-element-srcset.js" defer></script>
 	<script src="./init.js" defer></script>
 </body>
