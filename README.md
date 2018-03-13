@@ -1,4 +1,4 @@
-# Video Element SrcSet JS
+# Video Element SrcSet JS 0.3.0
 Device-based breakpoints videos sources for HTML5 videos
 
 This utility plugin allows the use of multiple videos sources for different breakpoints on HTML5 videos in a similar way to images srcset. By default, uses device-based breakpoint like the ones used by Bootstrap (xsmall, small, medium, large, xlarge), but it allows the use of standard media queries as well (it's more powerful, but more difficulty to use)

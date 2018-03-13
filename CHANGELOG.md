@@ -1,7 +1,7 @@
 # Changelog
 Theme Name: Video Element SrcSet JS
 Description: Breakpoint based multiple videos sources for html5 videos
-Version: 0.1.0
+Version: 0.3.0
 
 All notable changes to this project will be documented in this file following [Keep a Changelog](http://keepachangelog.com/) conventions and rules.
 This project adheres to [Semantic Versioning](http://semver.org/)
@@ -23,7 +23,7 @@ Suggested Roadmap:
 	- module support
 	- loadJS
 
-## [0.3.0] - 2018-03-10
+## [0.3.0] - 2018-03-12
 
 ### Added
 - Allow the use of standard and complex media queries
@@ -33,6 +33,10 @@ Suggested Roadmap:
 ### Changed
 - Improved README.md
 - added an `itshuuuge-trustme-iknowhuge` breakpoint for huge screens
+- Minor tweaks to demo page (index.html)
+
+### Removed
+- Parameters from plugin main function
 
 ## [0.2.0] - 2018-03-10
 

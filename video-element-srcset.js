@@ -79,17 +79,9 @@ var extend = function () {
  *
  * Allows the use of multiple videos sources for different breakpoints on HTML5 videos
  *
+ * @version    0.2.0
  * @since      0.1.0
  * @access     public
- *
- * @param   {node}      videoElement    HTML element to be used or the first found video element
- * @param   {array}     videoSources    An array of arrays containing a media string, a video src (URL) string
- *                                      and and string to signaling if the src was fully loaded or not.
- *                                      The key is the media string.
- *          @param   {string}     videoSources[i][0]    device-based breakpoint names to be tested against
- *          @param   {string}     videoSources[i][1]    a video src, it must be an URL
- *          @param   {string}     videoSources[i][2]    a media string to be signal if the src was loaded fully
- *                                                      Values: 'loaded' or 'not-loaded'.
  *
  * @return {void}
  */
