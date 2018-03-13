@@ -23,6 +23,11 @@ Suggested Roadmap:
 	- module support
 	- loadJS
 
+## [0.3.1] - 2018-03-12
+
+### Fixed
+- README.md
+
 ## [0.3.0] - 2018-03-12
 
 ### Added

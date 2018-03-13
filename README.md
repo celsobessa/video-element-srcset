@@ -216,7 +216,7 @@ The plugin CSS folder has 3 different CSS examples, but you can use any rules yo
 </style>
 ```
 
-#### Standar Media Queries
+#### Standard Media Queries
 
 ```html
 <style id="video-element-srcset">
@@ -345,7 +345,8 @@ Please review the [contributing guidelines](CONTRIBUTING.md).
 Parts of this utility use techniques, ideas and code from [Chris Ferdinandi](https://bit.ly/2hsrSwm), [Mike Herchel](https://www.lullabot.com/), [Paul Irish](http://paulirish.com/), Erik Möller and Tino Zijdel.
 
 >"If I have seen further it is by standing on the shoulders of Giants."
->[Isaac Newton]([)https://en.wikipedia.org/wiki/Standing_on_the_shoulders_of_giants)
+>
+>[Isaac Newton](https://en.wikipedia.org/wiki/Standing_on_the_shoulders_of_giants)
 
 This plugin was originally comissioned by and created with financial support from [XPlastic](https://xplastic.com.br) (NSFW).
 
