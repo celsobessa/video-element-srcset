@@ -1,6 +1,9 @@
 # Video Element SrcSet JS 0.3.0
 Device-based breakpoints videos sources for HTML5 videos
 
+- _Para o LEIAME.md em português, [clique aqui](LEIAME.md)_
+- _Para el LEYAME.md en español, haga [clic aqui](LEYAME.md)_
+
 This utility plugin allows the use of multiple videos sources for different breakpoints on HTML5 videos in a similar way to images srcset. By default, uses device-based breakpoint like the ones used by Bootstrap (xsmall, small, medium, large, xlarge), but it allows the use of standard media queries as well (it's more powerful, but more difficulty to use)
 
 It is * specially useful for background videos* and it relies on [Mike Herchel's ](https://www.lullabot.com/articles/importing-css-breakpoints-into-javascript) CSS pseudo-elements technique for managing breakpoints and Chris Ferdinandi's [Debouncing Events](https://gomakethings.com/debouncing-events-with-requestanimationframe-for-better-performance/) technique
@@ -20,7 +23,7 @@ Add the stylesheet to you site. You may use an external stylesheet or inline sty
 Add the script tag in your footer. The file video-element-srcset.js contains both Video Element SrcSet JS and requestAnimationFrame polyfill by Erik Möller
 
 ```html
-<script src="video-element-srcset.js"></script>
+<script src="video-element-srcset.js" defer></script>
 ```
 
 ### 3. Use `data-srcset` in you HTML5 video source tag
@@ -36,13 +39,12 @@ In the footer of your page after the content, or in separate script, initialize 
 
 ```html
 <script>
-	videoElementSrcset.init()
+    videoElementSrcset.init();
 </script>
 ```
-
 #### 4.1 Passing options on init
 
-You can pass an options object to the init method
+You can pass an options object to the `init` method
 
 ```javascript
 var options = {
@@ -55,17 +57,16 @@ var options = {
 		'"@media (min-width: 960px)"': 4,
 		'"@media (min-width: 960px) and (orientation: landscape)"': 5,
 		'"@media (min-width: 1200px)"': 5,
-	} // custom weights for your breakpoints.
+	} // custom widths for your breakpoints.
 	// The video loading is triggered only when going from smaller to larger screens
 };
 videoElementSrcset.init( options );
 ```
-
 ## About the Stylesheets and CSS pseudo-elements technique
 
 You may use the CSS rules in an external stylesheet or inline styles in the document `<head>`.
 
-It's important, though, to make sure you understand the technique. You can learn about it here and here, but the general gist is that you use CSS pseudo-element (i.e. :before and :after) content rule to keep track of the screen size by changing the content string at different breakpoints and then use javascript to get the string when window is resizing.
+It's important, though, to make sure you understand the technique. You can learn about it here and here, but the general gist is that you use CSS pseudo-element (i.e. :before and :after) `content` attribute to keep track of the screen size by changing the `content` string at different breakpoints and then use javascript to get the string when window is resizing.
 
 ### The Stylesheets
 
@@ -262,20 +263,18 @@ The plugin CSS folder has 3 different CSS examples, but you can use any rules yo
 ```
 **If you are planning to use standard media queries**, read the next section carefully.
 
-### About Performance, Breakpoint Weights and Triggering Source changes
+### About Performance, Breakpoint Widths and Triggering Source changes
 
-To avoid reloading smaller videos when you resize the window to an smaller size and you already loaded larger or better videos, the plugin uses breakpoint weights. It means every breakpoint has an integer as weight and the change of the src is triggered only when two conditions are met:
+To avoid reloading smaller videos when you resize the window to an smaller size, and the browser already loaded larger or better videos, the plugin uses breakpoint weights. It means every breakpoint has an integer as weight and the change of the src is triggered only when two conditions are met:
 
 1. the previous breakpoint weight is less than the new breakpoint
-2. the active src attribute URL string is different from the new one
+2. the current content of the `src` attribute is different from the new one
 
-(in the future, it may use an string flag as well. e.g. `loaded` or `not-loaded`)
+**You can set your own weigths using an options object with the init method**, but if you are planning using the device-based breakpoints from the fixed pixel width, relative widths and Bootstrap 4 sample stylesheets, it's suggested you keep the default weigths. It's easy and useful for most situations.
 
-**You can set your own weights using an options object with the init method**, but if you are planning using the device-based breakpoints from the fixed pixel widths, relative widths and Bootstrap 4 sample stylesheets, it's suggested you keep the default weights. It's easy and useful for most situations.
+On the other hand, **if you are planning to use standard media queries** (e.g. @media (min-width: 960px) ) and specially more *complex media queries* (e.g. @media (min-width: 960px) and (orientation: landscape) ), you should set your own weigths with the same name as your queries and also use you media queries and the content rule for the :before CSS pseudo-element. It's powerful, but a little bit harder.
 
-On the other hand, **if you are planning to use standard media queries** (e.g. @media (min-width: 960px) ) and specially more *complex media queries* (e.g. @media (min-width: 960px) and (orientation: landscape) ), you should set your own weights with the same name as your queries and also use you media queries and the content rule for the :before CSS pseudo-element. It's powerful, but a little bit harder.
-
-#### Using standard Media Queries and custom breakpoint weights
+#### Using standard Media Queries and custom breakpoint weigths
 
 Say you have this `data-srcset` attribute:
 
@@ -317,7 +316,7 @@ var options = {
 		'"@media (min-width: 720px)"': 2,
 		'"@media (min-width: 960px)"': 3,
 		'"@media (min-width: 1024px) and (orientation: landscape)"': 4
-	} // custom weights for your breakpoints.
+	} // custom widths for your breakpoints.
 	// The video loading is triggered only when going from smaller to larger screens
 };
 videoElementSrcset.init(options);
@@ -348,7 +347,6 @@ Parts of this utility use techniques, ideas and code from [Chris Ferdinandi](htt
 >
 >[Isaac Newton](https://en.wikipedia.org/wiki/Standing_on_the_shoulders_of_giants)
 
-This plugin was originally comissioned by and created with financial support from [XPlastic](https://xplastic.com.br) (NSFW).
 
 ## License
 

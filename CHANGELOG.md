@@ -1,28 +1,22 @@
 # Changelog
 Theme Name: Video Element SrcSet JS
-Description: Breakpoint based multiple videos sources for html5 videos
-Version: 0.3.0
+Description: Breakpoint based multiple videos sources for HTML5 videos
+Version: 0.4.0
 
 All notable changes to this project will be documented in this file following [Keep a Changelog](http://keepachangelog.com/) conventions and rules.
 This project adheres to [Semantic Versioning](http://semver.org/)
 
-## Unreleased
+- _Para CAMBIOS.md en español, haga [clic aquí](CAMBIOS.md)_
+- _Para MUDANCAS.md em português, [clique aqui](MUDANCAS.md)_
+## [0.4.0] - 2021-11-27
 
-Suggested Roadmap:
-
-- move srcset to video element
-- make sure it supports multiple instances of video tags
-- allow video without <source> elements
-- Improve documentation
-- improve performance: avoid unnecessary file downloads (maybe conditionally avoid video.load() method )
-- improve performance: service worker and cache API
-- enforce security
-- improve logic for consistency and performance
-- use src/dist and build processes
-- legacy/ES5 modes
-	- module support
-	- loadJS
-
+### Fixed
+- English grammar and spelling in comments
+- English grammar and spelling in English documentation
+### Added
+- Documentation: added MUDANCAS.md and LEIAME.md, Portuguese versions of CHANGELOG.md and README.md.
+- Documentation: added CAMBIOS.md and LEYAME.md, Spanish versions of CHANGELOG.md and README.md.
+-
 ## [0.3.1] - 2018-03-12
 
 ### Fixed

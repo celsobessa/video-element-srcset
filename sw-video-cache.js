@@ -3,7 +3,7 @@ self.addEventListener('fetch', function (event) {
     event.respondWith(
         caches.match(event.request)
             .then(function (response) {
-                // Cache hit - return response
+                // Cache hit - return response.
                 console.log('Cache hit');
                 console.log('return response = ', response);
                 if (response) {

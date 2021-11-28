@@ -75,9 +75,9 @@ var extend = function () {
 };
 
 /**
- * Breakpoint based multiple videos sources for html5 videos
+ * Breakpoint based multiple videos sources for HTML5 videos.
  *
- * Allows the use of multiple videos sources for different breakpoints on HTML5 videos
+ * Allows the use of multiple videos sources for different breakpoints on HTML5 videos.
  *
  * @version    0.2.0
  * @since      0.1.0
@@ -87,23 +87,24 @@ var extend = function () {
  */
 
  var videoElementSrcset = function () {
-    // TODO allow custom videoElement, videoSources through function parameters
+    // TODO allow custom videoElement and videoSources through function parameters.
 
-    // declare our variables
+    // declare our variables.
     var breakpoint, previousBreakpoint, activeVideoBreakpoint, breakpointWeights, autoplay, timeout, videoSourceElement, activeSource, videoSrcSet = '';
 
-    // if videoElement is not provided, get the first video element in the document
+    // if videoElement is not provided, get the first video element in the document.
     var videoElement = videoElement || document.getElementsByTagName('video')[0];
 
-    // if videoSources is not provided, create an empty object
+    // if videoSources is not provided, create an empty object.
      var videoSources = videoSources || [];
 
-    // Public APIs
+    // Public APIs.
     var publicAPIs = {};
 
-    // Settings
+    // Settings.
     var settings;
 
+    // Defaults.
     var defaults = {
         serviceWorker: true,
         autoplay: false,
@@ -116,18 +117,18 @@ var extend = function () {
         }
     };
 
-    // install Service Worker to better cache management
+    // install Service Worker for better cache management.
     var installWorker = function () {
         navigator.serviceWorker.register('./sw-video-cache.js', { scope: './' }).then(function (registration) {
-            // Registration was successful
+            // Registration was successful.
             console.log('ServiceWorker registration successful with scope: ', registration.scope);
         }, function (err) {
-            // registration failed :(
+            // registration failed.
             console.log('ServiceWorker registration failed: ', err);
         });
     }
 
-    // Get the current breakpoint
+    // Get the current breakpoint,
     var getBreakpoint = function () {
         return window.getComputedStyle(document.body, ':before').content;
     };
@@ -136,16 +137,16 @@ var extend = function () {
     if ( autoplay && 'false' !== autoplay ){
         settings.autoplay = true;
     }
-    // Calculate breakpoint on page load
+    // Calculate breakpoint on page load.
     breakpoint = previousBreakpoint = activeVideoBreakpoint = getBreakpoint();
 
-    // if there's no video element is found, return and show error on console
+    // if there's no video element, return and show error on console.
     if (0 === videoElement.length) {
         return;
     }
 
-    // if videoSources is an empty object, get all source elements nested inside videoElement
-    // if there is no sources, bail and logs to console
+    // if videoSources is an empty object, get all source elements nested inside videoElement.
+    // if there is no sources, bail and logs to console,
     if (!videoSources || 0 === videoSources.length) {
 
 
@@ -155,18 +156,18 @@ var extend = function () {
             return;
         }
 
-        // get our information from markup
+        // get our information from markup.
         videoSrcSet = videoSourceElement.getAttribute('data-srcset');
 
-        // if there's no data-srcset info, bail and log
+        // if there's no data-srcset info, bail and log.
         if (!videoSrcSet || '' === videoSrcSet) {
             return;
         }
 
-        //convert data-srcset to an array
+        //convert data-srcset to an array.
         videoSrcSet = videoSrcSet.split('; ');
 
-        // loops the through our sources
+        // loops the through our sources.
         for (i = 0; i < videoSrcSet.length; ++i) {
 
             var components = videoSrcSet[i].split(', ');
@@ -175,13 +176,13 @@ var extend = function () {
     }
 
 
-    // window.resize listener
+    // window.resize listener.
     var breakpointListener = function () {
         breakpoint = getBreakpoint();
         if ( breakpointWeights[breakpoint] ) {
 
-            // triggers only if breakpoint changed and if the new breakpoint is larger than the one
-            // which loaded the active video
+            // triggers only if breakpoint changed and if the new breakpoint is
+            // larger than the one which loaded the active video.
             if ( breakpointWeights[breakpoint] !== breakpointWeights[previousBreakpoint] && breakpointWeights[breakpoint] > breakpointWeights[activeVideoBreakpoint] ) {
                 publicAPIs.manageSrc( breakpoint);
             }
@@ -189,37 +190,37 @@ var extend = function () {
 
         previousBreakpoint = breakpoint;
         return;
-    }
+    };
 
-    // manager the source swap
+    // manager the source swap.
     publicAPIs.manageSrc = function ( breakpoint ) {
 
         // what is the active src?
         activeSource = videoSourceElement.getAttribute('src');
 
-        // if activeSource URL is the same URL for this breakpoint, do nothing
+        // if activeSource URL is the same URL for this breakpoint, do nothing.
         if ( activeSource !== videoSources[breakpoint][0]) {
 
-            // let's change the src of the source element
+            // let's change the src of the source element.
             videoSourceElement.setAttribute('src', videoSources[breakpoint][0]);
-            //  test if is possible avoid a new load by check if was loaded before
+            //  test if it is possible to avoid a new load by checking if it was already loaded before,
 
-            // loads videos
+            // loads videos.
             videoElement.load();
 
-            // let's signal this video is loaded
+            // let's signal this video is loaded.
             // TODO: this should be done only after the video fully loads
-            videoSources[breakpoint][1] = 'loaded'
+            videoSources[breakpoint][1] = 'loaded';
 
             // play it, monkey!
             if ( settings.autoplay === true ){
                 videoElement.play();
             }
 
-            // update activeSource
+            // update activeSource.
             activeSource = videoSources[breakpoint][0];
 
-            // activeVideoBreakpoint
+            // activeVideoBreakpoint.
             activeVideoBreakpoint = breakpoint;
         }
         return;
@@ -229,21 +230,21 @@ var extend = function () {
     // init method
     publicAPIs.init = function (options) {
 
-        // Feature test
+        // Feature test.
         var supports = 'querySelector' in document && 'addEventListener' in window;
         if (!supports) return;
 
 
-        // defaults
-        // TODO allows overriding of breakpoint weights
+        // defaults.
+        // TODO allow overriding of breakpoint weights.
 
-        // Merge user options with the defaults
+        // Merge user options with the defaults.
         settings = extend(defaults, options || {});
 
-        // breakpoint weights, used to avoid unnecessaries video loading
+        // breakpoint weights, used to avoid unnecessary video loading.
         breakpointWeights = settings.breakpointWeights;
 
-        // if the Service Worker is supported, install it to better cache management
+        // if the Service Worker is supported, install it for better cache management.
         if ( settings.serviceWorker = true && true === defaults.serviceWorker && 'serviceWorker' in navigator) {
             //installWorker();
             //console.log('installWorker');
@@ -274,6 +275,6 @@ var extend = function () {
 
     }
 
-    // return ou publis APIs
+    // return ou publis APIs.
     return publicAPIs;
 }();
